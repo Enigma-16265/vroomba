@@ -23,9 +23,5 @@ dependencies {
     implementation 'com.acmerobotics.dashboard:dashboard:0.4.6'
     implementation 'com.github.Thermal-Equilibrium:homeostasis-FTC:1.0.6'
     implementation 'com.github.Eeshwar-Krishnan:PhotonFTC:v2.0.1'
-    implementation 'com.github.Wobblyyyy.Pathfinder2:geometry:v2.4.0'
-    implementation 'com.github.Wobblyyyy.Pathfinder2:kinematics:v2.4.0'
-    implementation 'com.github.Wobblyyyy.Pathfinder2:core:v2.4.0'
-    implementation 'com.github.Wobblyyyy.Pathfinder2:OdometryCore:v2.4.0'
 }
 
