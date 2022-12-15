@@ -14,10 +14,10 @@ public class OdoBotTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     //Motors
     //Drivetrain
-    private DcMotor wheelFrontRight; //front right 0
-    private DcMotor wheelFrontLeft; //front left 2
-    private DcMotor wheelRearRight; //rear right 1
-    private DcMotor wheelRearLeft; //rear left 3
+    private DcMotor rightFront; //front right 0
+    private DcMotor leftFront; //front left 2
+    private DcMotor rightRear; //rear right 1
+    private DcMotor leftRear; //rear left 3
 
     //Encoders
     private DcMotor verticalRight; // 2
@@ -34,15 +34,15 @@ public class OdoBotTeleOp extends LinearOpMode {
 
         // Initialize the hardware variables
         //Motors
-        wheelFrontRight = hardwareMap.get(DcMotor.class, "wheelFrontRight");
-        wheelFrontLeft = hardwareMap.get(DcMotor.class, "wheelFrontLeft");
-        wheelRearRight = hardwareMap.get(DcMotor.class, "wheelRearRight");
-        wheelRearLeft = hardwareMap.get(DcMotor.class, "wheelRearLeft");
+        rightFront = hardwareMap.get(DcMotor.class, "rightFront");
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
+        rightRear = hardwareMap.get(DcMotor.class, "rightRear");
+        leftRear = hardwareMap.get(DcMotor.class, "leftRear");
 
         //Encoders
-        verticalRight = hardwareMap.get(DcMotor.class, "wheelFrontLeft");
-        verticalLeft = hardwareMap.get(DcMotor.class, "wheelFrontRight");
-        horizontal = hardwareMap.get(DcMotor.class, "wheelRearLeft");
+        verticalRight = hardwareMap.get(DcMotor.class, "leftFront");
+        verticalLeft = hardwareMap.get(DcMotor.class, "rightFront");
+        horizontal = hardwareMap.get(DcMotor.class, "leftRear");
 
         //Set motor directions
         /////////////////////////////////////////////////////////////////////////////////
@@ -51,17 +51,17 @@ public class OdoBotTeleOp extends LinearOpMode {
         //wheelRearRight.setDirection(DcMotor.Direction.REVERSE);
         //wheelRearLeft.setDirection(DcMotor.Direction.FORWARD);
 
-        wheelFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        wheelFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        wheelRearRight.setDirection(DcMotor.Direction.FORWARD);
-        wheelRearLeft.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        rightRear.setDirection(DcMotor.Direction.REVERSE);
+        leftRear.setDirection(DcMotor.Direction.FORWARD);
 
 
         //Set motor modes
-        wheelFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        wheelFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        wheelRearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        wheelRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         verticalLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         verticalRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -111,10 +111,10 @@ public class OdoBotTeleOp extends LinearOpMode {
             }
 
 
-            wheelFrontRight.setPower(wheelFrontRightPower);
-            wheelFrontLeft.setPower(wheelRearRightPower);
-            wheelRearRight.setPower(wheelFrontLeftPower);
-            wheelRearLeft.setPower(wheelRearLeftPower);
+            rightFront.setPower(wheelFrontRightPower);
+            leftFront.setPower(wheelRearRightPower);
+            rightRear.setPower(wheelFrontLeftPower);
+            leftRear.setPower(wheelRearLeftPower);
         }
     }
 }
