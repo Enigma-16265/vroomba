@@ -46,10 +46,10 @@ public class OdoBotTeleOp extends LinearOpMode {
 
         //Set motor directions
         /////////////////////////////////////////////////////////////////////////////////
-        //wheelFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        //wheelFrontLeft.setDirection(DcMotor.Direction.FORWARD);
-        //wheelRearRight.setDirection(DcMotor.Direction.REVERSE);
-        //wheelRearLeft.setDirection(DcMotor.Direction.FORWARD);
+        //rightFront.setDirection(DcMotor.Direction.FORWARD);
+        //leftFront.setDirection(DcMotor.Direction.REVERSE);
+        //rightRear.setDirection(DcMotor.Direction.FORWARD);
+        //leftRear.setDirection(DcMotor.Direction.REVERSE);
 
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         leftFront.setDirection(DcMotor.Direction.FORWARD);
@@ -93,10 +93,10 @@ public class OdoBotTeleOp extends LinearOpMode {
             double horizontal = gamepad1.left_stick_x;
             double pivot = gamepad1.right_stick_x;
 
-            double wheelFrontRightPower = pivot - vertical + horizontal;
-            double wheelFrontLeftPower = pivot - vertical - horizontal;
-            double wheelRearRightPower = -pivot - vertical - horizontal;
-            double wheelRearLeftPower = -pivot - vertical + horizontal;
+            double wheelFrontRightPower = pivot - vertical - horizontal;
+            double wheelFrontLeftPower = pivot - vertical + horizontal;
+            double wheelRearRightPower = -pivot - vertical + horizontal;
+            double wheelRearLeftPower = -pivot - vertical - horizontal;
 
             if (gamepad1.left_bumper) {
                 wheelFrontRightPower = Range.clip(wheelFrontRightPower, -0.3, 0.3);
