@@ -20,9 +20,9 @@ public class OdoBotTeleOp extends LinearOpMode {
     private DcMotor leftRear; //rear left 3
 
     //Encoders
-    private DcMotor verticalRight; // 2
-    private DcMotor verticalLeft; // 0
-    private DcMotor horizontal; // 3
+    private DcMotor verticalRight; // 1
+    private DcMotor verticalLeft; // 3
+    private DcMotor horizontal; // 0
 
     BNO055IMU imu;                // Additional Gyro device
     Orientation angles;
@@ -40,9 +40,9 @@ public class OdoBotTeleOp extends LinearOpMode {
         leftRear = hardwareMap.get(DcMotor.class, "leftRear");
 
         //Encoders
-        verticalRight = hardwareMap.get(DcMotor.class, "leftFront");
-        verticalLeft = hardwareMap.get(DcMotor.class, "rightFront");
-        horizontal = hardwareMap.get(DcMotor.class, "leftRear");
+        verticalRight = hardwareMap.get(DcMotor.class, "rightRear");
+        verticalLeft = hardwareMap.get(DcMotor.class, "leftRear");
+        horizontal = hardwareMap.get(DcMotor.class, "rightFront");
 
         //Set motor directions
         /////////////////////////////////////////////////////////////////////////////////
