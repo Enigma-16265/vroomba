@@ -39,6 +39,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 @Autonomous(name = "ENIGMA Autonomous", group = "00-Autonomous", preselectTeleOp = "ENIGMA TeleOp")
 public class testRRAuto extends LinearOpMode{
@@ -64,7 +65,7 @@ public class testRRAuto extends LinearOpMode{
     private final static double servoStop = 0;
 
     // initialize drive hardware
-    SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
 
     /*
     OpenCV / April Tags
@@ -90,7 +91,7 @@ public class testRRAuto extends LinearOpMode{
     int Left = 5; // Location 1
     int Middle = 10; // Location 2
     int Right = 15; // Location 3
-
+    String ParkingZone = "None";
     int DetectedTag = 2;
 
     AprilTagDetection tagOfInterest = null;
@@ -100,8 +101,8 @@ public class testRRAuto extends LinearOpMode{
     {
 
         // initialize mech hardware
-        revCRservo = hardwareMap.get(CRServo.class, "revCRservo");
-
+        //revCRservo = hardwareMap.get(CRServo.class, "revCRservo");
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         selectStartingPosition();
 
         // Vision OpenCV / Apriltags
@@ -149,6 +150,13 @@ public class testRRAuto extends LinearOpMode{
                 {
                     if(tag.id == Left || tag.id == Right || tag.id == Middle)
                     {
+                        if (tag.id == Left) {
+                            ParkingZone = "Location 1";
+                        } else if (tag.id == Middle) {
+                            ParkingZone = "Location 2";
+                        } else if (tag.id == Right) {
+                            ParkingZone = "Location 3";
+                        }
                         tagOfInterest = tag;
                         tagFound = true;
                         break;
@@ -177,11 +185,11 @@ public class testRRAuto extends LinearOpMode{
 
             }
 
-            telemetry.clearAll();
+            //telemetry.clearAll();
             telemetry.addData("Start ENIGMA Autonomous Mode for Team:","16265");
             telemetry.addData("---------------------------------------","");
-            telemetry.addData("Selected Starting Position", startPosition);
-            telemetry.addData("Vision identified Parking Location", tagOfInterest);
+            telemetry.addData("Selected Starting Position:", startPosition);
+            telemetry.addData("Vision identified Parking Location:", ParkingZone);
             telemetry.update();
         }
 
@@ -221,13 +229,13 @@ public class testRRAuto extends LinearOpMode{
 
     void tagToTelemetry(AprilTagDetection detection)
     {
-        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+        telemetry.addLine(String.format(Locale.ENGLISH,"\nDetected tag ID=%d", detection.id));
+        telemetry.addLine(String.format(Locale.ENGLISH,"Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
+        telemetry.addLine(String.format(Locale.ENGLISH,"Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
+        telemetry.addLine(String.format(Locale.ENGLISH,"Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
+        telemetry.addLine(String.format(Locale.ENGLISH,"Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
+        telemetry.addLine(String.format(Locale.ENGLISH,"Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
+        telemetry.addLine(String.format(Locale.ENGLISH,"Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
     }
 
 
@@ -247,6 +255,7 @@ public class testRRAuto extends LinearOpMode{
 
     //Set all position based on selected staring location and Build Autonomous Trajectory
     public void buildAuto() {
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         switch (startPosition) {
             case BLUE_LEFT:
                 initPose = new Pose2d(-54, 36, Math.toRadians(0)); //Starting pose
@@ -348,13 +357,15 @@ public class testRRAuto extends LinearOpMode{
                 }
                 break;
         }
-
-        trajectoryParking = drive.trajectorySequenceBuilder(midWayPose)
-                .lineToLinearHeading(parkPose)
-                .build();
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        telemetry.addData("Picked Cone: Stack", DetectedTag);
+        // trajectoryParking = drive.trajectorySequenceBuilder(midWayPose)
+       //         .lineToLinearHeading(parkPose)
+       //         .build();
     }
     //Run Auto trajectory and parking trajectory
     public void runAutoAndParking(){
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         telemetry.setAutoClear(false);
         telemetry.addData("Running ENIGMA Autonomous Mode for Team:","16265");
         telemetry.addData("---------------------------------------","");
@@ -367,7 +378,7 @@ public class testRRAuto extends LinearOpMode{
     //Write a method which is able to pick the cone from the stack depending on your subsystems
     public void pickCone(int coneCount) {
         /*TODO: Add code to pick Cone 1 from stack*/
-        revCRservo.setPower(servoLeft);
+        //revCRservo.setPower(servoLeft);
         telemetry.addData("Picked Cone: Stack", coneCount);
         telemetry.update();
     }
@@ -375,7 +386,7 @@ public class testRRAuto extends LinearOpMode{
     //Write a method which is able to drop the cone depending on your subsystems
     public void dropCone(int coneCount){
         /*TODO: Add code to drop cone on junction*/
-        revCRservo.setPower(servoRight);
+        //revCRservo.setPower(servoRight);
 
         if (coneCount == 0) {
             telemetry.addData("Dropped Cone", "Pre-loaded");
@@ -386,7 +397,7 @@ public class testRRAuto extends LinearOpMode{
     }
 
     public void parkingComplete(){
-        revCRservo.setPower(servoStop);
+        //revCRservo.setPower(servoStop);
         telemetry.addData("Parked in Location", tagOfInterest.id);
         telemetry.update();
     }
