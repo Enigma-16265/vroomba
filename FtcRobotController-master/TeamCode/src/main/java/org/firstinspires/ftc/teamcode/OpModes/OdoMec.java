@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -25,6 +28,25 @@ public class OdoMec extends LinearOpMode {
     private DcMotor verticalLeft; // 3
     private DcMotor horizontal; // 0
 
+    //Mechanism motors
+    private DcMotor turret;
+    private DcMotor leftSlide;
+    private DcMotor rightSlide;
+
+    //Servos
+    private Servo odoRetractor;
+    private Servo flipOut;
+    private Servo finger;
+    private Servo claw;
+    private Servo clawLinkage;
+
+    //Magnetic Switches
+    private RevTouchSensor slideMag;
+    private RevTouchSensor homeMag;
+
+    //Distance sensor
+    //private Rev2mDistanceSensor clawDistance;
+
     BNO055IMU imu;                // Additional Gyro device
     Orientation angles;
 
@@ -34,7 +56,7 @@ public class OdoMec extends LinearOpMode {
         telemetry.update();
 
         // Initialize the hardware variables
-        //Motors
+        //Drive motors
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         rightRear = hardwareMap.get(DcMotor.class, "rightRear");
@@ -45,18 +67,29 @@ public class OdoMec extends LinearOpMode {
         verticalLeft = hardwareMap.get(DcMotor.class, "leftRear");
         horizontal = hardwareMap.get(DcMotor.class, "rightFront");
 
-        //Set motor directions
-        /////////////////////////////////////////////////////////////////////////////////
-        //rightFront.setDirection(DcMotor.Direction.FORWARD);
-        //leftFront.setDirection(DcMotor.Direction.REVERSE);
-        //rightRear.setDirection(DcMotor.Direction.FORWARD);
-        //leftRear.setDirection(DcMotor.Direction.REVERSE);
+        //Mechanism motors
+        turret = hardwareMap.get(DcMotor.class, "turret");
+        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
+        rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
+
+        //Servos
+        odoRetractor = hardwareMap.get(Servo.class, "odoRetractor");
+        flipOut = hardwareMap.get(Servo.class, "flipOut");
+        finger = hardwareMap.get(Servo.class, "finger");
+        claw = hardwareMap.get(Servo.class, "claw");
+        clawLinkage = hardwareMap.get(Servo.class, "clawLinkage");
+
+        //Magnetic switches
+        slideMag = hardwareMap.get(RevTouchSensor.class, "slideMag");
+        homeMag = hardwareMap.get(RevTouchSensor.class, "homeMag");
+
+        //Distance sensor
+        //clawDistance = hardwareMap.get(Rev2mDistanceSensor.class, "clawDistance");
 
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         leftFront.setDirection(DcMotor.Direction.FORWARD);
         rightRear.setDirection(DcMotor.Direction.REVERSE);
         leftRear.setDirection(DcMotor.Direction.FORWARD);
-
 
         //Set motor modes
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -79,6 +112,11 @@ public class OdoMec extends LinearOpMode {
 
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+
+
+        //Set servo positions
+
+
 
         telemetry.addData("Status", "OdoMec2 is ready to run!");
         telemetry.update();
@@ -122,6 +160,26 @@ public class OdoMec extends LinearOpMode {
             telemetry.addData("Status", "Run " + runtime.toString());
             telemetry.addData("Motors", "forward (%.2f), strafe (%.2f),turn (%.2f)" , forward, strafe, turn);
             telemetry.update();
+
+
+
+            //Mechanisms
+            //slideMag.isPressed()
+            //clawDistance.getDistance();
+
+            if (gamepad2.a) {
+                clawLinkage.setPosition(0.5);
+            }
+            //else
+
+            if (gamepad2.left_bumper) {
+                turret.setPower(0.2);
+            } else {
+                turret.setPower(0);
+            }
+
+            idle();
+
         }
     }
 }
