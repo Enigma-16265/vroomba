@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -45,7 +47,7 @@ public class OdoMec extends LinearOpMode {
     private RevTouchSensor homeMag;
 
     //Distance sensor
-    //private Rev2mDistanceSensor clawDistance;
+    private DistanceSensor clawDistance;
 
     BNO055IMU imu;                // Additional Gyro device
     Orientation angles;
@@ -84,7 +86,10 @@ public class OdoMec extends LinearOpMode {
         homeMag = hardwareMap.get(RevTouchSensor.class, "homeMag");
 
         //Distance sensor
-        //clawDistance = hardwareMap.get(Rev2mDistanceSensor.class, "clawDistance");
+        clawDistance = hardwareMap.get(DistanceSensor.class, "clawDistance");
+        // you can also cast this to a Rev2mDistanceSensor if you want to use added
+        // methods associated with the Rev2mDistanceSensor class.
+        Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor)clawDistance;
 
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         leftFront.setDirection(DcMotor.Direction.FORWARD);
@@ -165,7 +170,19 @@ public class OdoMec extends LinearOpMode {
 
             //Mechanisms
             //slideMag.isPressed()
+
             //clawDistance.getDistance();
+            telemetry.addData("deviceName",clawDistance.getDeviceName() );
+            telemetry.addData("range", String.format("%.01f mm", clawDistance.getDistance(DistanceUnit.MM)));
+            telemetry.addData("range", String.format("%.01f cm", clawDistance.getDistance(DistanceUnit.CM)));
+            telemetry.addData("range", String.format("%.01f m", clawDistance.getDistance(DistanceUnit.METER)));
+            telemetry.addData("range", String.format("%.01f in", clawDistance.getDistance(DistanceUnit.INCH)));
+
+            // Rev2mDistanceSensor specific methods.
+            telemetry.addData("ID", String.format("%x", sensorTimeOfFlight.getModelID()));
+            telemetry.addData("did time out", Boolean.toString(sensorTimeOfFlight.didTimeoutOccur()));
+
+            telemetry.update();
 
             if (gamepad2.a) {
                 clawLinkage.setPosition(0.5);
