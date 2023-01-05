@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-@TeleOp(name = "Sensor: REV2mDistance", group = "Sensor")
-@Disabled
+@TeleOp(name = "testSensor")
+
 public class teleopTest extends LinearOpMode {
 
 

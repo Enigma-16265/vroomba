@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@TeleOp(name="OdoMec")
+@TeleOp(name="TeleMec")
 
 
 public class OdoMec extends LinearOpMode {
