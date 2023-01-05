@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
+//import com.qualcomm.robotcore.hardware.DistanceSensor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+//import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp(name="TeleMec")
@@ -46,7 +46,7 @@ public class OdoMec extends LinearOpMode {
     private RevTouchSensor homeMag;
 
     //Distance sensor
-    private DistanceSensor clawDistance;
+    //private DistanceSensor clawDistance;
 
     BNO055IMU imu;                // Additional Gyro device
     Orientation angles;
@@ -85,7 +85,7 @@ public class OdoMec extends LinearOpMode {
         homeMag = hardwareMap.get(RevTouchSensor.class, "homeMag");
 
         //Distance sensor
-        clawDistance = hardwareMap.get(DistanceSensor.class, "clawDistance");
+        //clawDistance = hardwareMap.get(DistanceSensor.class, "clawDistance");
         // you can also cast this to a Rev2mDistanceSensor if you want to use added
         // methods associated with the Rev2mDistanceSensor class.
 
@@ -118,7 +118,7 @@ public class OdoMec extends LinearOpMode {
 
 
         //Set servo positions
-
+        clawLinkage.setPosition(0.5);
 
 
         telemetry.addData("Status", "OdoMec2 is ready to run!");
@@ -169,13 +169,13 @@ public class OdoMec extends LinearOpMode {
             //Mechanisms
             //slideMag.isPressed()
             // generic DistanceSensor methods.
-            telemetry.addData("deviceName",clawDistance.getDeviceName() );
-            telemetry.addData("range", String.format("%.01f mm", clawDistance.getDistance(DistanceUnit.MM)));
-            telemetry.addData("range", String.format("%.01f cm", clawDistance.getDistance(DistanceUnit.CM)));
-            telemetry.addData("range", String.format("%.01f m", clawDistance.getDistance(DistanceUnit.METER)));
-            telemetry.addData("range", String.format("%.01f in", clawDistance.getDistance(DistanceUnit.INCH)));
+            //telemetry.addData("deviceName",clawDistance.getDeviceName() );
+            //telemetry.addData("range", String.format("%.01f mm", clawDistance.getDistance(DistanceUnit.MM)));
+            //telemetry.addData("range", String.format("%.01f cm", clawDistance.getDistance(DistanceUnit.CM)));
+            //telemetry.addData("range", String.format("%.01f m", clawDistance.getDistance(DistanceUnit.METER)));
+            //telemetry.addData("range", String.format("%.01f in", clawDistance.getDistance(DistanceUnit.INCH)));
 
-            telemetry.update();
+            //telemetry.update();
 
             if (gamepad2.a) {
                 clawLinkage.setPosition(0.5);
